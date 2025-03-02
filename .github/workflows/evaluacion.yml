@@ -20,8 +20,8 @@ jobs:
 
     - name: Merge Hidden Tests
       run: |
-        git fetch origin hidden-tests
-        git merge --no-commit --no-ff origin/hidden-tests || true
+        git fetch origin hidden-test
+        git merge --no-commit --no-ff origin/hidden-test || true
 
     - name: Install dependencies
       run: |
