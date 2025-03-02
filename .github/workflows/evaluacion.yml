@@ -1,0 +1,44 @@
+name: Deploy Calificación
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+  
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Permite traer todas las ramas y hacer merge
+
+    - name: Merge Hidden Tests
+      run: |
+        git fetch origin hidden-tests
+        git merge --no-commit --no-ff origin/hidden-tests || true
+
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y cmake 
+
+    - name: Create build directory
+      run: mkdir -p build
+
+    # Genera los archivos de construcción con CMake
+    - name: Configure project with CMake
+      run: |
+        cmake -S . -B build
+
+    # Compila el proyecto
+    - name: Build project
+      run: cmake --build build
+
+    - name: Run tests
+      run: ctest --test-dir build
