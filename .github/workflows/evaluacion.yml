@@ -15,13 +15,6 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
-      with:
-        fetch-depth: 0  # Permite traer todas las ramas y hacer merge
-
-    - name: Merge Hidden Tests
-      run: |
-        git fetch origin hidden-tests
-        git merge --no-commit --no-ff origin/hidden-tests || true
 
     - name: Install dependencies
       run: |
